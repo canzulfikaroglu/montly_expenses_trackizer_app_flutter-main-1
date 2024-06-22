@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1027457691360",
+    "project_id": "mywallet-d9d88",
+    "storage_bucket": "mywallet-d9d88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027457691360:android:777927b615c532097c6a85",
+        "android_client_info": {
+          "package_name": "com.codeforany.trackizer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAEbQnqIBCSLfhdRpSc4Og_v4_X256ArxA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
