@@ -1,4 +1,3 @@
-
 import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -102,7 +101,7 @@ class CalendarAgendaState extends State<CalendarAgenda>
   late Widget leading;
   late double _scrollAlignment;
 
-  List<String> _eventDates = [];
+  List<String> _eventDates = []; // data ekleme listesi
   List<DateTime> _dates = [];
   DateTime? _selectedDate;
   int? _daySelectedIndex;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:trackizer/auth_service.dart';
 import 'package:trackizer/view/login/sign_in_view.dart';
 
 import '../../common/color_extension.dart';
@@ -32,7 +33,7 @@ class _SignUpViewState extends State<SignUpView> {
                   width: media.width * 0.5, fit: BoxFit.contain),
               const Spacer(),
               RoundTextField(
-                title: "E-mail address",
+                title: "E-mail Adresi",
                 controller: txtEmail,
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -40,7 +41,7 @@ class _SignUpViewState extends State<SignUpView> {
                 height: 15,
               ),
               RoundTextField(
-                title: "Password",
+                title: "Şifre",
                 controller: txtPassword,
                 obscureText: true,
               ),
@@ -103,19 +104,17 @@ class _SignUpViewState extends State<SignUpView> {
                 height: 20,
               ),
               PrimaryButton(
-                title: "Get started, it's free!",
-                onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const SocialLoginView(),
-                  //   ),
-                  // );
+                title: "Hesap Oluştur",
+                onPressed: () async {
+                  await AuthService().signup(
+                      email: txtEmail.text,
+                      password: txtPassword.text,
+                      context: context);
                 },
               ),
               const Spacer(),
               Text(
-                "Do you have already an account?",
+                "Zaten Hesabiniz var mi?",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: TColor.white, fontSize: 14),
               ),
@@ -123,9 +122,9 @@ class _SignUpViewState extends State<SignUpView> {
                 height: 20,
               ),
               SecondaryButton(
-                title: "Sign in",
+                title: "Giriş Yap",
                 onPressed: () {
-                   Navigator.push(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const SignInView(),

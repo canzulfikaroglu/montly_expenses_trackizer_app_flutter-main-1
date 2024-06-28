@@ -45,14 +45,14 @@ class _FullCalendarState extends State<FullCalendar> {
   late DateTime startDate;
   late int _initialPage;
 
-  List<String>? _events = [];
+  List<String>? _events = []; //
 
   late PageController _horizontalScroll;
 
   void initState() {
     setState(() {
       startDate = DateTime.parse(
-          "${widget.startDate.toString().split(" ").first} 00:00:00.000");
+          "${widget.startDate.toString().split(" ").first} 00:00:00.001");
 
       endDate = DateTime.parse(
           "${widget.endDate.toString().split(" ").first} 23:00:00.000");
@@ -295,7 +295,8 @@ class _FullCalendarState extends State<FullCalendar> {
                       height: 5,
                       decoration: BoxDecoration(
                         color: isSelectedDate
-                              ? widget.dateSelectedColor!.withOpacity(0.9) : widget.dateSelectedBg,
+                            ? widget.dateSelectedColor!.withOpacity(0.9)
+                            : widget.dateSelectedBg,
                         borderRadius: BorderRadius.circular(3),
                       ),
                     )

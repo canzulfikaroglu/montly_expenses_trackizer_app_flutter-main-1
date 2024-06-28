@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:trackizer/view/login/sign_up_view.dart';
 import '../../common/color_extension.dart';
 import '../../common_widget/icon_item_row.dart';
 
@@ -12,7 +12,8 @@ class SettingsView extends StatefulWidget {
 
 class _SettingsViewState extends State<SettingsView> {
   bool isActive = false;
-
+  TextEditingController txtEmail = TextEditingController();
+  TextEditingController txtPassword = TextEditingController();
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.sizeOf(context);
@@ -66,7 +67,7 @@ class _SettingsViewState extends State<SettingsView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Can Zülfikaroğlu",
+                  txtEmail.text,
                   style: TextStyle(
                       color: TColor.white,
                       fontSize: 20,
@@ -81,7 +82,7 @@ class _SettingsViewState extends State<SettingsView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "can1zulfikaroglu@gmail.com",
+                  "cans",
                   style: TextStyle(
                       color: TColor.gray30,
                       fontSize: 12,
@@ -121,7 +122,7 @@ class _SettingsViewState extends State<SettingsView> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20, bottom: 8),
                     child: Text(
-                      "Üyeliğim",
+                      "Hesabim",
                       style: TextStyle(
                           color: TColor.white,
                           fontSize: 14,

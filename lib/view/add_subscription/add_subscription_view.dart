@@ -1,4 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trackizer/common/color_extension.dart';
 import 'package:trackizer/common_widget/primary_button.dart';
@@ -7,7 +9,7 @@ import 'package:trackizer/common_widget/round_textfield.dart';
 import '../../common_widget/image_button.dart';
 
 class AddSubScriptionView extends StatefulWidget {
-  const AddSubScriptionView({super.key});
+  AddSubScriptionView({super.key});
 
   @override
   State<AddSubScriptionView> createState() => _AddSubScriptionViewState();
@@ -15,7 +17,7 @@ class AddSubScriptionView extends StatefulWidget {
 
 class _AddSubScriptionViewState extends State<AddSubScriptionView> {
   TextEditingController txtDescription = TextEditingController();
-
+  final FirebaseFirestore _database = FirebaseFirestore.instance;
   List subArr = [
     {"name": "Mutfak Alışverişi", "icon": "assets/img/kitchen.png", "ID": "1"},
     {"name": "Fatura", "icon": "assets/img/bill.png", "ID": "2"},
@@ -32,6 +34,15 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
 
   @override
   Widget build(BuildContext context) {
+    final CollectionReference harcamalarcesiti = _database.collection(
+        'harcamacesitleri'); //en üstteki collection path'ini tanımladık
+    final DocumentReference harcamacesitidoc = harcamalarcesiti.doc(
+        'jenKpsu3AQmyaeea6OZP'); //en üstteki collection'ın içindeki ilk doc'a ulaştık
+    final CollectionReference harcamabilgisi =
+        _database.collection('harcamabilgisi');
+    final DocumentReference ahrcamabilgisidoc =
+        harcamabilgisi.doc('TFia6fc8IMJHaNJP2jFF');
+
     var media = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: TColor.gray,
@@ -202,8 +213,33 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: PrimaryButton(
                   title: "Harcama Ekle",
-                  onPressed: () {
-                    //buraya localde tutulacak şekilde veri gönderilecek
+                  onPressed: () async {
+                    try {
+                      // Yeni bir harcama belgesi oluştur
+                      await _database.collection('harcamacesitleri').add({
+                        'aciklama': txtDescription.text,
+                        'fiyat': amountVal,
+                        'tarih': FieldValue.serverTimestamp(),
+                      });
+
+                      // İşlem başarılı olursa, bir Snackbar göster
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Harcama başarıyla eklendi")),
+                      );
+
+                      // Formu sıfırla
+                      txtDescription.clear();
+                      setState(() {
+                        amountVal = 0.00;
+                      });
+                    } catch (e) {
+                      // Hata durumunda bir Snackbar göster
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text("Hata: Harcama eklenemedi")),
+                      );
+                    }
+
+                    //buraya firebase'e veri göndereceğiz
                   }),
             ),
             const SizedBox(

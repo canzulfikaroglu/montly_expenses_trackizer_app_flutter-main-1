@@ -124,7 +124,10 @@ class _MainTabViewState extends State<MainTabView> {
                     ),
                     InkWell(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => const AddSubScriptionView()) );
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddSubScriptionView()));
                       },
                       child: Container(
                         margin: const EdgeInsets.all(20),

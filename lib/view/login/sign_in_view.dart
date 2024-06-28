@@ -34,7 +34,7 @@ class _SignInViewState extends State<SignInView> {
                   width: media.width * 0.5, fit: BoxFit.contain),
               const Spacer(),
               RoundTextField(
-                title: "Login",
+                title: "Giriş",
                 controller: txtEmail,
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -42,7 +42,7 @@ class _SignInViewState extends State<SignInView> {
                 height: 15,
               ),
               RoundTextField(
-                title: "Password",
+                title: "Şifre",
                 controller: txtPassword,
                 obscureText: true,
               ),
@@ -72,7 +72,7 @@ class _SignInViewState extends State<SignInView> {
                           width: 8,
                         ),
                         Text(
-                          "Remember me",
+                          "Beni Hatitla",
                           style: TextStyle(color: TColor.gray50, fontSize: 14),
                         ),
                       ],
@@ -81,7 +81,7 @@ class _SignInViewState extends State<SignInView> {
                   TextButton(
                     onPressed: () {},
                     child: Text(
-                      "Forgot password",
+                      "Şifremi Unuttum",
                       style: TextStyle(color: TColor.gray50, fontSize: 14),
                     ),
                   ),
@@ -91,7 +91,7 @@ class _SignInViewState extends State<SignInView> {
                 height: 8,
               ),
               PrimaryButton(
-                title: "Sign In",
+                title: "Giriş Yap",
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -103,7 +103,7 @@ class _SignInViewState extends State<SignInView> {
               ),
               const Spacer(),
               Text(
-                "if you don't have an account yet?",
+                "Henüz bir hesap oluşturmadiniz mi ?",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: TColor.white, fontSize: 14),
               ),
