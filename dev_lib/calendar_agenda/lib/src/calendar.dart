@@ -217,6 +217,7 @@ class CalendarAgendaState extends State<CalendarAgenda>
                             ),
                             SizedBox(height: 5),
                             Text(
+                              //bu kısmı incele
                               widget.weekDay == WeekDay.long
                                   ? DateFormat.EEEE(Locale(_locale).toString())
                                       .format(date)

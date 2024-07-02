@@ -33,7 +33,7 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 14.0,
       );
-    } catch (e) {}
+    }
   }
 
   Future<void> signin(
@@ -64,13 +64,13 @@ class AuthService {
         textColor: Colors.white,
         fontSize: 14.0,
       );
-    } catch (e) {}
+    }
   }
 
   Future<void> signout({required BuildContext context}) async {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
     Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => SignInView()));
+        MaterialPageRoute(builder: (BuildContext context) => const SignInView()));
   }
 }

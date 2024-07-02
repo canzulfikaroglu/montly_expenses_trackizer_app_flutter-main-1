@@ -16,27 +16,27 @@ class SpendingBudgetsView extends StatefulWidget {
 class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
   List budgetArr = [
     {
-      "name": "Auto & Transport",
+      "name": "Yeni araba",
       "icon": "assets/img/auto_&_transport.png",
-      "spend_amount": "25.99",
-      "total_budget": "400",
-      "left_amount": "250.01",
+      "saved_budget": "15000",
+      "total_budget": "500000",
+      "left_amount": "100", //fiyattan biriktirilen miktar çıkarılacak
       "color": TColor.secondaryG
     },
     {
-      "name": "Entertainment",
+      "name": "Yeni ev",
       "icon": "assets/img/entertainment.png",
-      "spend_amount": "50.99",
-      "total_budget": "600",
-      "left_amount": "300.01",
+      "saved_budget": "15000",
+      "total_budget": "1150000",
+      "left_amount": "100",
       "color": TColor.secondary50
     },
     {
-      "name": "Security",
+      "name": "Yeni telefon",
       "icon": "assets/img/security.png",
-      "spend_amount": "5.99",
-      "total_budget": "600",
-      "left_amount": "250.01",
+      "saved_budget": "500",
+      "total_budget": "20000",
+      "left_amount": "100",
       "color": TColor.primary10
     },
   ];
@@ -88,19 +88,19 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
                 Column(
                   children: [
                     Text(
-                      "\$82,90",
+                      "5000\₺", //aylık toplam harcamayı gösterecek
                       style: TextStyle(
                           color: TColor.white,
                           fontSize: 24,
                           fontWeight: FontWeight.w700),
                     ),
-                    Text(
-                      "of \$2,0000 budget",
-                      style: TextStyle(
-                          color: TColor.gray30,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500),
-                    ),
+                    // Text(
+                    //   "of 2,0000 budget\₺",//buraya gerek yok
+                    //   style: TextStyle(
+                    //       color: TColor.gray30,
+                    //       fontSize: 12,
+                    //       fontWeight: FontWeight.w500),
+                    // ),
                   ],
                 )
               ],
@@ -127,7 +127,8 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Your budgets are on tack 👍",
+                        " hedefleriniz doğrultusunda ilerliyorsunuz 👍", // hedeflerle ilgili bir şey yazıcam
+
                         style: TextStyle(
                             color: TColor.white,
                             fontSize: 14,
@@ -156,7 +157,10 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               child: InkWell(
                 borderRadius: BorderRadius.circular(16),
-                onTap: () {},
+                onTap: () {
+                  //yeni hedef ekleme butonu
+                  print("can");
+                },
                 child: DottedBorder(
                   dashPattern: const [5, 4],
                   strokeWidth: 1,
@@ -174,7 +178,7 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Add new category ",
+                          "Yeni bir hedef ekle ",
                           style: TextStyle(
                               color: TColor.gray30,
                               fontSize: 14,

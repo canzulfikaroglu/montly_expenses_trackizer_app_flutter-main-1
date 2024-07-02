@@ -19,18 +19,14 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   bool isSubscription = true;
   List subArr = [
-    {"name": "Spotify", "icon": "assets/img/spotify_logo.png", "price": "5.99"},
     {
-      "name": "YouTube Premium",
-      "icon": "assets/img/youtube_logo.png",
-      "price": "18.99"
+      "name": "Mutfak Harcaması",
+      "icon": "assets/img/kitchen.png",
+      "price": "2000"
     },
-    {
-      "name": "Microsoft OneDrive",
-      "icon": "assets/img/onedrive_logo.png",
-      "price": "29.99"
-    },
-    {"name": "NetFlix", "icon": "assets/img/netflix_logo.png", "price": "15.00"}
+    {"name": "Eğlence", "icon": "assets/img/laugh.png", "price": "200"},
+    {"name": "Eğitim", "icon": "assets/img/education.png", "price": "400"},
+    {"name": "Hobi", "icon": "assets/img/hobbies.png", "price": "800"}
   ];
 
   List bilArr = [
@@ -52,7 +48,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     var media = MediaQuery.sizeOf(context);
     return Scaffold(
-      backgroundColor: TColor.gray,
+      backgroundColor: const Color.fromARGB(51, 130, 178, 255),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -114,7 +110,7 @@ class _HomeViewState extends State<HomeView> {
                         height: media.width * 0.07,
                       ),
                       Text(
-                        "1,235",
+                        "", //günlük toplam harcama burda yazılacak
                         style: TextStyle(
                             color: TColor.white,
                             fontSize: 40,
@@ -124,7 +120,7 @@ class _HomeViewState extends State<HomeView> {
                         height: media.width * 0.055,
                       ),
                       Text(
-                        "This month bills",
+                        "Bu Ay Yapılan Harcamalar",
                         style: TextStyle(
                             color: TColor.gray40,
                             fontSize: 12,
@@ -145,7 +141,7 @@ class _HomeViewState extends State<HomeView> {
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Text(
-                            "See your budget",
+                            "Bakiyeni Gör!",
                             style: TextStyle(
                                 color: TColor.white,
                                 fontSize: 12,
@@ -164,7 +160,7 @@ class _HomeViewState extends State<HomeView> {
                           children: [
                             Expanded(
                               child: StatusButton(
-                                title: "Active subs",
+                                title: "Harcamalar",
                                 value: "12",
                                 statusColor: TColor.secondary,
                                 onPressed: () {},
@@ -175,8 +171,8 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             Expanded(
                               child: StatusButton(
-                                title: "Highest subs",
-                                value: "\$19.99",
+                                title: "En Yüksek Harcama",
+                                value: "1500 TL",
                                 statusColor: TColor.primary10,
                                 onPressed: () {},
                               ),
@@ -186,8 +182,8 @@ class _HomeViewState extends State<HomeView> {
                             ),
                             Expanded(
                               child: StatusButton(
-                                title: "Lowest subs",
-                                value: "\$5.99",
+                                title: "En Düşük Harcama",
+                                value: "400 TL",
                                 statusColor: TColor.secondaryG,
                                 onPressed: () {},
                               ),
@@ -210,7 +206,7 @@ class _HomeViewState extends State<HomeView> {
                 children: [
                   Expanded(
                     child: SegmentButton(
-                      title: "Your subscription",
+                      title: "Harcamaların",
                       isActive: isSubscription,
                       onPressed: () {
                         //tuttuğumuz verileri burada çağırmamız gerekiyor
@@ -222,7 +218,7 @@ class _HomeViewState extends State<HomeView> {
                   ),
                   Expanded(
                     child: SegmentButton(
-                      title: "Upcoming bills",
+                      title: "Gelirlerin",
                       isActive: !isSubscription,
                       onPressed: () {
                         setState(() {

@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:trackizer/common/color_extension.dart';
 import 'package:trackizer/common_widget/primary_button.dart';
@@ -9,7 +8,7 @@ import 'package:trackizer/common_widget/round_textfield.dart';
 import '../../common_widget/image_button.dart';
 
 class AddSubScriptionView extends StatefulWidget {
-  AddSubScriptionView({super.key});
+  const AddSubScriptionView({super.key});
 
   @override
   State<AddSubScriptionView> createState() => _AddSubScriptionViewState();
@@ -224,7 +223,8 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
 
                       // İşlem başarılı olursa, bir Snackbar göster
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Harcama başarıyla eklendi")),
+                        const SnackBar(
+                            content: Text("Harcama başarıyla eklendi")),
                       );
 
                       // Formu sıfırla
@@ -235,7 +235,8 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                     } catch (e) {
                       // Hata durumunda bir Snackbar göster
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text("Hata: Harcama eklenemedi")),
+                        const SnackBar(
+                            content: Text("Hata: Harcama eklenemedi")),
                       );
                     }
 

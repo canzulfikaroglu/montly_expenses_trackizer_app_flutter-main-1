@@ -127,7 +127,7 @@ class _MainTabViewState extends State<MainTabView> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddSubScriptionView()));
+                                builder: (context) => const AddSubScriptionView()));
                       },
                       child: Container(
                         margin: const EdgeInsets.all(20),

@@ -31,7 +31,7 @@ class _WelcomeViewState extends State<WelcomeView> {
         alignment: Alignment.topCenter,
         children: [
           Image.asset(
-            "assets/img/welcome_screen.png",
+            "assets/img/welcome_screen1.png",
             width: media.width,
             height: media.height,
             fit: BoxFit.cover,
@@ -46,7 +46,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                       width: media.width * 0.5, fit: BoxFit.contain),
                   const Spacer(),
                   Text(
-                    "Congue malesuada in ac justo, a tristique\nleo massa. Arcu leo leo urna risus.",
+                    "",
                     textAlign: TextAlign.center,
                     style: TextStyle(color: TColor.white, fontSize: 14),
                   ),

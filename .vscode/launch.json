@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "trackizer",
+            "name": "myWallet",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "trackizer (profile mode)",
+            "name": "myWallet (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
