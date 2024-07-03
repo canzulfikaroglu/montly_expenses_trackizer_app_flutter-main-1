@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:trackizer/common/color_extension.dart';
 import 'package:trackizer/common_widget/primary_button.dart';
 import 'package:trackizer/common_widget/round_textfield.dart';
+import 'package:trackizer/constants.dart';
+import 'package:trackizer/dataadd.dart';
 
 import '../../common_widget/image_button.dart';
 
@@ -29,14 +32,39 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
     {"name": "Hobi", "icon": "assets/img/hobbies.png", "ID": "9"},
   ];
 
+  // Initialize with the first item's values
+  String name = 'Mutfak Alışverişi';
+  String icon = 'assets/img/kitchen.png';
+  double price = 0.0;
+  String description = '';
+  DateTime date = DateTime.now();
+  int selectedIndex = 0; // Variable to track the selected index
+
+  List<Expense> expenses = [];
+
   double amountVal = 0.00;
+  DateTime? _selectedDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != _selectedDate) {
+      setState(() {
+        _selectedDate = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final CollectionReference harcamalarcesiti = _database.collection(
-        'harcamacesitleri'); //en üstteki collection path'ini tanımladık
-    final DocumentReference harcamacesitidoc = harcamalarcesiti.doc(
-        'jenKpsu3AQmyaeea6OZP'); //en üstteki collection'ın içindeki ilk doc'a ulaştık
+    final CollectionReference harcamalarcesiti =
+        _database.collection('harcamacesitleri');
+    final DocumentReference harcamacesitidoc =
+        harcamalarcesiti.doc('jenKpsu3AQmyaeea6OZP');
     final CollectionReference harcamabilgisi =
         _database.collection('harcamabilgisi');
     final DocumentReference ahrcamabilgisidoc =
@@ -109,12 +137,20 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                           viewportFraction: 0.65,
                           enlargeFactor: 0.4,
                           enlargeStrategy: CenterPageEnlargeStrategy.zoom,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              selectedIndex = index; // Update selected index
+                              name =
+                                  subArr[selectedIndex]['name']; // Update name
+                              icon =
+                                  subArr[selectedIndex]['icon']; // Update icon
+                            });
+                          },
                         ),
                         itemCount: subArr.length,
                         itemBuilder: (BuildContext context, int itemIndex,
                             int pageViewIndex) {
                           var sObj = subArr[itemIndex] as Map? ?? {};
-
                           return Container(
                             margin: const EdgeInsets.all(10),
                             child: Column(
@@ -210,16 +246,46 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Tarih Seç:',
+                    style: TextStyle(
+                      color: TColor.gray40,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => _selectDate(context),
+                    child: Text(
+                      _selectedDate != null
+                          ? DateFormat('dd/MM/yyyy').format(_selectedDate!)
+                          : 'Tarih Seç',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: PrimaryButton(
                   title: "Harcama Ekle",
                   onPressed: () async {
+                    description = txtDescription.text;
                     try {
+                      // Print statements to debug
+                      print('Selected name: $name');
+                      print('Selected icon: $icon');
+
                       // Yeni bir harcama belgesi oluştur
-                      await _database.collection('harcamacesitleri').add({
-                        'aciklama': txtDescription.text,
-                        'fiyat': amountVal,
-                        'tarih': FieldValue.serverTimestamp(),
-                      });
+                      FirebaseProcess().dataAdd(Expense(
+                          name: name,
+                          description: description,
+                          price: amountVal,
+                          icon: icon,
+                          date: _selectedDate ?? DateTime.now()));
 
                       // İşlem başarılı olursa, bir Snackbar göster
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -239,8 +305,6 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                             content: Text("Hata: Harcama eklenemedi")),
                       );
                     }
-
-                    //buraya firebase'e veri göndereceğiz
                   }),
             ),
             const SizedBox(

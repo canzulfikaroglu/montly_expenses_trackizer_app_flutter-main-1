@@ -139,20 +139,6 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
                 ),
               ),
             ),
-            ListView.builder(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: budgetArr.length,
-                itemBuilder: (context, index) {
-                  var bObj = budgetArr[index] as Map? ?? {};
-
-                  return BudgetsRow(
-                    bObj: bObj,
-                    onPressed: () {},
-                  );
-                }),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
               child: InkWell(

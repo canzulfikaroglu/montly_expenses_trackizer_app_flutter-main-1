@@ -1,6 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:trackizer/common/color_extension.dart';
-
+import 'package:trackizer/constants.dart';
 import '../../common_widget/custom_arc_painter.dart';
 import '../../common_widget/segment_button.dart';
 import '../../common_widget/status_button.dart';
@@ -18,261 +19,282 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   bool isSubscription = true;
-  List subArr = [
-    {
-      "name": "Mutfak Harcaması",
-      "icon": "assets/img/kitchen.png",
-      "price": "2000"
-    },
-    {"name": "Eğlence", "icon": "assets/img/laugh.png", "price": "200"},
-    {"name": "Eğitim", "icon": "assets/img/education.png", "price": "400"},
-    {"name": "Hobi", "icon": "assets/img/hobbies.png", "price": "800"}
-  ];
+  final FirebaseFirestore _database = FirebaseFirestore.instance;
+  List<Expense> expenses = [];
+  bool isLoading = true;
 
-  List bilArr = [
-    {"name": "Spotify", "date": DateTime(2023, 07, 25), "price": "5.99"},
-    {
-      "name": "YouTube Premium",
-      "date": DateTime(2023, 07, 25),
-      "price": "18.99"
-    },
-    {
-      "name": "Microsoft OneDrive",
-      "date": DateTime(2023, 07, 25),
-      "price": "29.99"
-    },
-    {"name": "NetFlix", "date": DateTime(2023, 07, 25), "price": "15.00"}
-  ];
+  @override
+  void initState() {
+    super.initState();
+    fetchExpenses();
+  }
+
+  Future<void> fetchExpenses() async {
+    final CollectionReference harcamabilgisi =
+        _database.collection('harcamabilgisi');
+    final QuerySnapshot querySnapshot = await harcamabilgisi.get();
+    setState(() {
+      expenses =
+          querySnapshot.docs.map((doc) => Expense.fromFirestore(doc)).toList();
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.sizeOf(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(51, 130, 178, 255),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              height: media.width * 1.1,
-              decoration: BoxDecoration(
-                  color: TColor.gray70.withOpacity(0.5),
-                  borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(25),
-                      bottomRight: Radius.circular(25))),
-              child: Stack(
-                alignment: Alignment.center,
+      body: isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Column(
                 children: [
-                  Image.asset("assets/img/home_bg.png"),
-                  Stack(
-                    alignment: Alignment.topCenter,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.only(bottom: media.width * 0.05),
-                        width: media.width * 0.72,
-                        height: media.width * 0.72,
-                        child: CustomPaint(
-                          painter: CustomArcPainter(
-                            end: 220,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Row(
+                  Container(
+                    height: media.width * 1.1,
+                    decoration: BoxDecoration(
+                        color: TColor.gray70.withOpacity(0.5),
+                        borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25))),
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Image.asset("assets/img/home_bg.png"),
+                        Stack(
+                          alignment: Alignment.topCenter,
                           children: [
-                            const Spacer(),
-                            IconButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SettingsView()));
-                                },
-                                icon: Image.asset("assets/img/settings.png",
-                                    width: 25,
-                                    height: 25,
-                                    color: TColor.gray30))
+                            Container(
+                              padding:
+                                  EdgeInsets.only(bottom: media.width * 0.05),
+                              width: media.width * 0.72,
+                              height: media.width * 0.72,
+                              child: CustomPaint(
+                                painter: CustomArcPainter(
+                                  end: 220,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Row(
+                                children: [
+                                  const Spacer(),
+                                  IconButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const SettingsView()));
+                                      },
+                                      icon: Image.asset(
+                                          "assets/img/settings.png",
+                                          width: 25,
+                                          height: 25,
+                                          color: TColor.gray30))
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(
-                        height: media.width * 0.05,
-                      ),
-                      Image.asset("assets/img/app_logo.png",
-                          width: media.width * 0.25, fit: BoxFit.contain),
-                      SizedBox(
-                        height: media.width * 0.07,
-                      ),
-                      Text(
-                        "", //günlük toplam harcama burda yazılacak
-                        style: TextStyle(
-                            color: TColor.white,
-                            fontSize: 40,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      SizedBox(
-                        height: media.width * 0.055,
-                      ),
-                      Text(
-                        "Bu Ay Yapılan Harcamalar",
-                        style: TextStyle(
-                            color: TColor.gray40,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      SizedBox(
-                        height: media.width * 0.07,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: TColor.border.withOpacity(0.15),
-                            ),
-                            color: TColor.gray60.withOpacity(0.3),
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: Text(
-                            "Bakiyeni Gör!",
-                            style: TextStyle(
-                                color: TColor.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Column(
-                      children: [
-                        const Spacer(),
-                        Row(
+                        Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Expanded(
-                              child: StatusButton(
-                                title: "Harcamalar",
-                                value: "12",
-                                statusColor: TColor.secondary,
-                                onPressed: () {},
-                              ),
+                            SizedBox(
+                              height: media.width * 0.05,
                             ),
-                            const SizedBox(
-                              width: 8,
+                            Image.asset("assets/img/app_logo.png",
+                                width: media.width * 0.25, fit: BoxFit.contain),
+                            SizedBox(
+                              height: media.width * 0.07,
                             ),
-                            Expanded(
-                              child: StatusButton(
-                                title: "En Yüksek Harcama",
-                                value: "1500 TL",
-                                statusColor: TColor.primary10,
-                                onPressed: () {},
-                              ),
+                            Text(
+                              "", //günlük toplam harcama burda yazılacak
+                              style: TextStyle(
+                                  color: TColor.white,
+                                  fontSize: 40,
+                                  fontWeight: FontWeight.w700),
                             ),
-                            const SizedBox(
-                              width: 8,
+                            SizedBox(
+                              height: media.width * 0.055,
                             ),
-                            Expanded(
-                              child: StatusButton(
-                                title: "En Düşük Harcama",
-                                value: "400 TL",
-                                statusColor: TColor.secondaryG,
-                                onPressed: () {},
+                            Text(
+                              "Bu Ay Yapılan Harcamalar",
+                              style: TextStyle(
+                                  color: TColor.gray40,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(
+                              height: media.width * 0.07,
+                            ),
+                            InkWell(
+                              onTap: () {},
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: TColor.border.withOpacity(0.15),
+                                  ),
+                                  color: TColor.gray60.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: Text(
+                                  "Bakiyeni Gör!",
+                                  style: TextStyle(
+                                      color: TColor.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                             )
                           ],
                         ),
+                        Padding(
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            children: [
+                              const Spacer(),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: StatusButton(
+                                      title: "Harcamalar",
+                                      value: "12",
+                                      statusColor: TColor.secondary,
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                    child: StatusButton(
+                                      title: "En Yüksek Harcama",
+                                      value: "1500 TL",
+                                      statusColor: TColor.primary10,
+                                      onPressed: () {},
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 8,
+                                  ),
+                                  Expanded(
+                                    child: StatusButton(
+                                      title: "En Düşük Harcama",
+                                      value: "400 TL",
+                                      statusColor: TColor.secondaryG,
+                                      onPressed: () {},
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        )
                       ],
                     ),
-                  )
-                ],
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-              height: 50,
-              decoration: BoxDecoration(
-                  color: Colors.black, borderRadius: BorderRadius.circular(15)),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: SegmentButton(
-                      title: "Harcamaların",
-                      isActive: isSubscription,
-                      onPressed: () {
-                        //tuttuğumuz verileri burada çağırmamız gerekiyor
-                        setState(() {
-                          isSubscription = !isSubscription;
-                        });
-                      },
+                  ),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.black,
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: SegmentButton(
+                            title: "Harcamaların",
+                            isActive: isSubscription,
+                            onPressed: () {
+                              setState(() {
+                                isSubscription = !isSubscription;
+                              });
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: SegmentButton(
+                            title: "Gelirlerin",
+                            isActive: !isSubscription,
+                            onPressed: () {
+                              setState(() {
+                                isSubscription = !isSubscription;
+                              });
+                            },
+                          ),
+                        )
+                      ],
                     ),
                   ),
-                  Expanded(
-                    child: SegmentButton(
-                      title: "Gelirlerin",
-                      isActive: !isSubscription,
-                      onPressed: () {
-                        setState(() {
-                          isSubscription = !isSubscription;
-                        });
-                      },
-                    ),
-                  )
+                  if (isSubscription)
+                    ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 0),
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: expenses.length,
+                        itemBuilder: (context, index) {
+                          var expense = expenses[index];
+
+                          return SubScriptionHomeRow(
+                            sObj: {
+                              'name': expense.name,
+                              'description': expense.description,
+                              'price': expense.price,
+                              'icon': expense.icon,
+                              'date': expense.date,
+                            },
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SubscriptionInfoView(
+                                            sObj: {
+                                              'name': expense.name,
+                                              'description':
+                                                  expense.description,
+                                              'price': expense.price,
+                                              'icon': expense.icon,
+                                              'date': expense.date,
+                                            },
+                                          )));
+                            },
+                          );
+                        }),
+                  if (!isSubscription)
+                    ListView.builder(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 0),
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: expenses.length,
+                        itemBuilder: (context, index) {
+                          var expense = expenses[index];
+
+                          return UpcomingBillRow(
+                            sObj: {
+                              'name': expense.name,
+                              'description': expense.description,
+                              'price': expense.price,
+                              'icon': expense.icon,
+                              'date': expense.date,
+                            },
+                            onPressed: () {},
+                          );
+                        }),
+                  const SizedBox(
+                    height: 110,
+                  ),
                 ],
               ),
             ),
-            if (isSubscription)
-              ListView.builder(
-                  //tutulan veriler burada olacak
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: subArr.length,
-                  itemBuilder: (context, index) {
-                    var sObj = subArr[index] as Map? ?? {};
-
-                    return SubScriptionHomeRow(
-                      sObj: sObj,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    SubscriptionInfoView(sObj: sObj)));
-                      },
-                    );
-                  }),
-            if (!isSubscription)
-              ListView.builder(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: subArr.length,
-                  itemBuilder: (context, index) {
-                    var sObj = subArr[index] as Map? ?? {};
-
-                    return UpcomingBillRow(
-                      sObj: sObj,
-                      onPressed: () {},
-                    );
-                  }),
-            const SizedBox(
-              height: 110,
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
