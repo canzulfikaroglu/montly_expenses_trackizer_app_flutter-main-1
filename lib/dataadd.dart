@@ -21,4 +21,16 @@ class FirebaseProcess {
   Future<DocumentSnapshot> dataGet(String docId) async {
     return await deneme1.doc(docId).get();
   }
+
+  Future<void> incomeAdd(Income income) async {
+    final FirebaseFirestore _database = FirebaseFirestore.instance;
+    // Yeni bir harcama belgesi oluştur
+    await _database.collection('gelirler').add({
+      'name': income.name,
+      'icon': income.icon,
+      'description': income.description,
+      'price': income.price,
+      'date': income.date,
+    });
+  }
 }

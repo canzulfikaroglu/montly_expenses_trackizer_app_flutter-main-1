@@ -32,18 +32,19 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
     {"name": "Hobi", "icon": "assets/img/hobbies.png", "ID": "9"},
   ];
 
-  // Initialize with the first item's values
   String name = 'Mutfak Alışverişi';
   String icon = 'assets/img/kitchen.png';
   double price = 0.0;
   String description = '';
   DateTime date = DateTime.now();
-  int selectedIndex = 0; // Variable to track the selected index
+  int selectedIndex = 0;
 
   List<Expense> expenses = [];
 
   double amountVal = 0.00;
   DateTime? _selectedDate;
+  bool isExpense =
+      true; // Variable to track if the user is adding an expense or income
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -69,6 +70,11 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
         _database.collection('harcamabilgisi');
     final DocumentReference ahrcamabilgisidoc =
         harcamabilgisi.doc('TFia6fc8IMJHaNJP2jFF');
+
+    final CollectionReference gelirbilgisi =
+        _database.collection('gelirbilgisi');
+    final DocumentReference gelirbilgisidoc =
+        gelirbilgisi.doc('TFia6fc8IMJHaNJP2jGG');
 
     var media = MediaQuery.sizeOf(context);
     return Scaffold(
@@ -139,11 +145,9 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                           enlargeStrategy: CenterPageEnlargeStrategy.zoom,
                           onPageChanged: (index, reason) {
                             setState(() {
-                              selectedIndex = index; // Update selected index
-                              name =
-                                  subArr[selectedIndex]['name']; // Update name
-                              icon =
-                                  subArr[selectedIndex]['icon']; // Update icon
+                              selectedIndex = index;
+                              name = subArr[selectedIndex]['name'];
+                              icon = subArr[selectedIndex]['icon'];
                             });
                           },
                         ),
@@ -178,6 +182,39 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                     )
                   ],
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isExpense = true;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          isExpense ? TColor.primary : TColor.gray30,
+                    ),
+                    child: Text('Harcamalar'),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        isExpense = false;
+                      });
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          isExpense ? TColor.gray30 : TColor.primary,
+                    ),
+                    child: Text('Gelirler'),
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -271,38 +308,42 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: PrimaryButton(
-                  title: "Harcama Ekle",
+                  title: isExpense ? "Harcama Ekle" : "Gelir Ekle",
                   onPressed: () async {
                     description = txtDescription.text;
                     try {
-                      // Print statements to debug
-                      print('Selected name: $name');
-                      print('Selected icon: $icon');
+                      if (isExpense) {
+                        FirebaseProcess().dataAdd(Expense(
+                            name: name,
+                            description: description,
+                            price: amountVal,
+                            icon: icon,
+                            date: _selectedDate ?? DateTime.now()));
+                      } else {
+                        FirebaseProcess().incomeAdd(Income(
+                            name: name,
+                            description: description,
+                            price: amountVal,
+                            icon: icon,
+                            date: _selectedDate ?? DateTime.now()));
+                      }
 
-                      // Yeni bir harcama belgesi oluştur
-                      FirebaseProcess().dataAdd(Expense(
-                          name: name,
-                          description: description,
-                          price: amountVal,
-                          icon: icon,
-                          date: _selectedDate ?? DateTime.now()));
-
-                      // İşlem başarılı olursa, bir Snackbar göster
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text("Harcama başarıyla eklendi")),
+                        SnackBar(
+                            content: Text(isExpense
+                                ? "Harcama başarıyla eklendi"
+                                : "Gelir başarıyla eklendi")),
                       );
 
-                      // Formu sıfırla
                       txtDescription.clear();
                       setState(() {
                         amountVal = 0.00;
                       });
                     } catch (e) {
-                      // Hata durumunda bir Snackbar göster
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                            content: Text("Hata: Harcama eklenemedi")),
+                        SnackBar(
+                            content: Text(
+                                "Hata: ${isExpense ? 'Harcama' : 'Gelir'} eklenemedi")),
                       );
                     }
                   }),

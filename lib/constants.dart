@@ -23,3 +23,30 @@ class Expense {
     );
   }
 }
+
+class Income {
+  final String name;
+  final String description;
+  final double price;
+  final String icon;
+  DateTime date;
+
+  Income({
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.icon,
+    required this.date,
+  });
+
+  factory Income.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map<String, dynamic>;
+    return Income(
+      name: data['name'] ?? '',
+      description: data['description'] ?? '',
+      price: data['price']?.toDouble() ?? 0.0,
+      icon: data['icon'] ?? '',
+      date: (data['date'] as Timestamp).toDate(),
+    );
+  }
+}

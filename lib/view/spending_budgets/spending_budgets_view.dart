@@ -14,7 +14,7 @@ class SpendingBudgetsView extends StatefulWidget {
 }
 
 class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
-  List budgetArr = [
+  List<Map<String, dynamic>> budgetArr = [
     {
       "name": "Yeni araba",
       "icon": "assets/img/auto_&_transport.png",
@@ -40,6 +40,83 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
       "color": TColor.primary10
     },
   ];
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController iconController = TextEditingController();
+  TextEditingController savedBudgetController = TextEditingController();
+  TextEditingController totalBudgetController = TextEditingController();
+  TextEditingController leftAmountController = TextEditingController();
+
+  void addNewBudget() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Yeni Hedef Ekle'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: [
+                TextField(
+                  controller: nameController,
+                  decoration: InputDecoration(labelText: 'Hedef Adı'),
+                ),
+                TextField(
+                  controller: iconController,
+                  decoration: InputDecoration(labelText: 'İkon Yolu'),
+                ),
+                TextField(
+                  controller: savedBudgetController,
+                  decoration: InputDecoration(labelText: 'Biriktirilen Bütçe'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: totalBudgetController,
+                  decoration: InputDecoration(labelText: 'Toplam Bütçe'),
+                  keyboardType: TextInputType.number,
+                ),
+                TextField(
+                  controller: leftAmountController,
+                  decoration: InputDecoration(labelText: 'Kalan Miktar'),
+                  keyboardType: TextInputType.number,
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text('İptal'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Ekle'),
+              onPressed: () {
+                setState(() {
+                  budgetArr.add({
+                    "name": nameController.text,
+                    "icon": iconController.text,
+                    "saved_budget": savedBudgetController.text,
+                    "total_budget": totalBudgetController.text,
+                    "left_amount": leftAmountController.text,
+                    "color": TColor
+                        .secondaryG // Renkleri dinamik olarak ayarlayabilirsiniz
+                  });
+                });
+                Navigator.of(context).pop();
+                // TextField'ları temizleyin
+                nameController.clear();
+                iconController.clear();
+                savedBudgetController.clear();
+                totalBudgetController.clear();
+                leftAmountController.clear();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +205,6 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
                     children: [
                       Text(
                         " hedefleriniz doğrultusunda ilerliyorsunuz 👍", // hedeflerle ilgili bir şey yazıcam
-
                         style: TextStyle(
                             color: TColor.white,
                             fontSize: 14,
@@ -144,8 +220,7 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
               child: InkWell(
                 borderRadius: BorderRadius.circular(16),
                 onTap: () {
-                  //yeni hedef ekleme butonu
-                  print("can");
+                  addNewBudget(); // Yeni hedef ekleme butonu
                 },
                 child: DottedBorder(
                   dashPattern: const [5, 4],
@@ -182,9 +257,24 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 110,
+            const Padding(padding: EdgeInsets.all(5)),
+            ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: budgetArr.length,
+              itemBuilder: (context, index) {
+                var budget = budgetArr[index];
+                return BudgetsRow(
+                  bObj: budget,
+                  onPressed: () {},
+                );
+              },
             ),
+            const SizedBox(
+              height: 200,
+              width: double.infinity,
+            )
           ],
         ),
       ),

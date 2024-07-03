@@ -16,7 +16,7 @@
             "flutterMode": "profile"
         },
         {
-            "name": "trackizer (release mode)",
+            "name": "myWallet (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

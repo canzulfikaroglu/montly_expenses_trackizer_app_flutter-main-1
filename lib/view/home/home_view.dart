@@ -21,12 +21,14 @@ class _HomeViewState extends State<HomeView> {
   bool isSubscription = true;
   final FirebaseFirestore _database = FirebaseFirestore.instance;
   List<Expense> expenses = [];
+  List<Income> incomes = [];
   bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
     fetchExpenses();
+    fetchIncomes();
   }
 
   Future<void> fetchExpenses() async {
@@ -40,9 +42,51 @@ class _HomeViewState extends State<HomeView> {
     });
   }
 
+  Future<void> fetchIncomes() async {
+    final CollectionReference gelirbilgisi =
+        _database.collection('gelirbilgisi');
+    final QuerySnapshot querySnapshot = await gelirbilgisi.get();
+    setState(() {
+      incomes =
+          querySnapshot.docs.map((doc) => Income.fromFirestore(doc)).toList();
+      isLoading = false;
+    });
+  }
+
+  Expense? getHighestExpense() {
+    if (expenses.isEmpty) {
+      return null;
+    }
+    Expense highestExpense = expenses[0];
+    for (var expense in expenses) {
+      if (expense.price > highestExpense.price) {
+        highestExpense = expense;
+      }
+    }
+    return highestExpense;
+  }
+
+  Expense? getLowestExpense() {
+    if (expenses.isEmpty) {
+      return null;
+    }
+    Expense lowestExpense = expenses[0];
+    for (var expense in expenses) {
+      if (expense.price < lowestExpense.price) {
+        lowestExpense = expense;
+      }
+    }
+    return lowestExpense;
+  }
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.sizeOf(context);
+    var highestExpense = getHighestExpense();
+    var highestExpenseValue = highestExpense?.price.toString() ?? "Yok";
+    var lowestExpense = getLowestExpense();
+    var lowestExpenseValue = lowestExpense?.price.toString() ?? "Yok";
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(51, 130, 178, 255),
       body: isLoading
@@ -161,7 +205,7 @@ class _HomeViewState extends State<HomeView> {
                                   Expanded(
                                     child: StatusButton(
                                       title: "Harcamalar",
-                                      value: "12",
+                                      value: expenses.length.toString(),
                                       statusColor: TColor.secondary,
                                       onPressed: () {},
                                     ),
@@ -172,7 +216,7 @@ class _HomeViewState extends State<HomeView> {
                                   Expanded(
                                     child: StatusButton(
                                       title: "En Yüksek Harcama",
-                                      value: "1500 TL",
+                                      value: highestExpenseValue,
                                       statusColor: TColor.primary10,
                                       onPressed: () {},
                                     ),
@@ -183,7 +227,7 @@ class _HomeViewState extends State<HomeView> {
                                   Expanded(
                                     child: StatusButton(
                                       title: "En Düşük Harcama",
-                                      value: "400 TL",
+                                      value: lowestExpenseValue,
                                       statusColor: TColor.secondaryG,
                                       onPressed: () {},
                                     ),
@@ -274,17 +318,17 @@ class _HomeViewState extends State<HomeView> {
                             horizontal: 20, vertical: 0),
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: expenses.length,
+                        itemCount: incomes.length,
                         itemBuilder: (context, index) {
-                          var expense = expenses[index];
+                          var income = incomes[index];
 
-                          return UpcomingBillRow(
+                          return SubScriptionHomeRow(
                             sObj: {
-                              'name': expense.name,
-                              'description': expense.description,
-                              'price': expense.price,
-                              'icon': expense.icon,
-                              'date': expense.date,
+                              'name': income.name,
+                              'description': income.description,
+                              'price': income.price,
+                              'icon': income.icon,
+                              'date': income.date,
                             },
                             onPressed: () {},
                           );
