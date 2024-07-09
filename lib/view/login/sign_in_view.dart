@@ -103,7 +103,7 @@ class _SignInViewState extends State<SignInView> {
               ),
               const Spacer(),
               Text(
-                "Henüz bir hesap oluşturmadiniz mi ?",
+                "Henüz bir hesap oluşturmadınız mı ?",
                 textAlign: TextAlign.center,
                 style: TextStyle(color: TColor.white, fontSize: 14),
               ),
@@ -111,7 +111,7 @@ class _SignInViewState extends State<SignInView> {
                 height: 20,
               ),
               SecondaryButton(
-                title: "Sign up",
+                title: "Kayıt Ol",
                 onPressed: () {
                   Navigator.push(
                     context,

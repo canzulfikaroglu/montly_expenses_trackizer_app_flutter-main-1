@@ -232,7 +232,7 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                   ImageButton(
                     image: "assets/img/minus.png",
                     onPressed: () {
-                      amountVal -= 1;
+                      amountVal -= 10;
 
                       if (amountVal < 0) {
                         amountVal = 0;
@@ -273,7 +273,7 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                   ImageButton(
                     image: "assets/img/plus.png",
                     onPressed: () {
-                      amountVal += 1;
+                      amountVal += 10;
 
                       setState(() {});
                     },

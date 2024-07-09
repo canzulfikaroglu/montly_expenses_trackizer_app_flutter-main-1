@@ -90,11 +90,11 @@ class _MainTabViewState extends State<MainTabView> {
                               onPressed: () {
                                 setState(() {
                                   selectTab = 2;
-                                  currentTabView = const CalenderView();
+                                  currentTabView = GeminiDataPage();
                                 });
                               },
                               icon: Image.asset(
-                                "assets/img/calendar.png",
+                                "assets/img/computer.png",
                                 width: 20,
                                 height: 20,
                                 color: selectTab == 2
@@ -104,10 +104,7 @@ class _MainTabViewState extends State<MainTabView> {
                             ),
                             IconButton(
                               onPressed: () {
-                                setState(() {
-                                  selectTab = 3;
-                                  currentTabView = const CardsView();
-                                });
+                                setState(() {});
                               },
                               icon: Image.asset(
                                 "assets/img/creditcards.png",
@@ -127,7 +124,8 @@ class _MainTabViewState extends State<MainTabView> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const AddSubScriptionView()));
+                                builder: (context) =>
+                                    const AddSubScriptionView()));
                       },
                       child: Container(
                         margin: const EdgeInsets.all(20),
