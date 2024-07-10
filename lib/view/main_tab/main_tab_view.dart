@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:trackizer/gemini.dart';
 import 'package:trackizer/view/add_subscription/add_subscription_view.dart';
 
 import '../../common/color_extension.dart';
 import '../calender/calender_view.dart';
-import '../card/cards_view.dart';
+import '../prediction/expense_prediction.dart';
 import '../home/home_view.dart';
 import '../spending_budgets/spending_budgets_view.dart';
 
@@ -70,11 +71,11 @@ class _MainTabViewState extends State<MainTabView> {
                               onPressed: () {
                                 setState(() {
                                   selectTab = 1;
-                                  currentTabView = const SpendingBudgetsView();
+                                  currentTabView = const GeminiDataPage();
                                 });
                               },
                               icon: Image.asset(
-                                "assets/img/budgets.png",
+                                "assets/img/computer.png",
                                 width: 20,
                                 height: 20,
                                 color: selectTab == 1
@@ -90,11 +91,11 @@ class _MainTabViewState extends State<MainTabView> {
                               onPressed: () {
                                 setState(() {
                                   selectTab = 2;
-                                  currentTabView = GeminiDataPage();
+                                  currentTabView = CalenderView();
                                 });
                               },
                               icon: Image.asset(
-                                "assets/img/computer.png",
+                                "assets/img/calendar.png",
                                 width: 20,
                                 height: 20,
                                 color: selectTab == 2
@@ -104,10 +105,13 @@ class _MainTabViewState extends State<MainTabView> {
                             ),
                             IconButton(
                               onPressed: () {
+                                //  selectTab = 3;
+                                //  currentTabView = CardsView();
+                                //aaaaaaaaaaaaaa
                                 setState(() {});
                               },
                               icon: Image.asset(
-                                "assets/img/creditcards.png",
+                                "assets/img/future.png",
                                 width: 20,
                                 height: 20,
                                 color: selectTab == 3

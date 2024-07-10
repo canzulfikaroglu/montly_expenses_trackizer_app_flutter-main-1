@@ -49,6 +49,7 @@ dependencies:
   fluttertoast: ^8.2.6
   cloud_firestore: ^5.0.1
   http: ^1.2.1
+  google_generative_ai: ^0.4.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

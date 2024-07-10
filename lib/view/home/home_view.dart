@@ -43,8 +43,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<void> fetchIncomes() async {
-    final CollectionReference gelirbilgisi =
-        _database.collection('gelirbilgisi');
+    final CollectionReference gelirbilgisi = _database.collection('gelirler');
     final QuerySnapshot querySnapshot = await gelirbilgisi.get();
     setState(() {
       incomes =
@@ -316,7 +315,7 @@ class _HomeViewState extends State<HomeView> {
                     ListView.builder(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 0),
-                        physics: const NeverScrollableScrollPhysics(),
+                        physics: const ScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: incomes.length,
                         itemBuilder: (context, index) {

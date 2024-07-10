@@ -3,8 +3,8 @@ import 'package:trackizer/constants.dart';
 
 class FirebaseProcess {
   final String aciklama = "";
-
-  CollectionReference deneme1 =
+  CollectionReference gelir = FirebaseFirestore.instance.collection('gelirler');
+  CollectionReference harcama =
       FirebaseFirestore.instance.collection('harcamabilgisi');
   Future<void> dataAdd(Expense expense) async {
     final FirebaseFirestore _database = FirebaseFirestore.instance;
@@ -19,7 +19,11 @@ class FirebaseProcess {
   }
 
   Future<DocumentSnapshot> dataGet(String docId) async {
-    return await deneme1.doc(docId).get();
+    return await harcama.doc(docId).get();
+  }
+
+  Future<DocumentSnapshot> dataGetincome(String docId) async {
+    return await gelir.doc(docId).get();
   }
 
   Future<void> incomeAdd(Income income) async {

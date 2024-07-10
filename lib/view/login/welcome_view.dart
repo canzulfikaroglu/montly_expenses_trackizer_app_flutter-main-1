@@ -54,7 +54,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                     height: 30,
                   ),
                   PrimaryButton(
-                    title: "Get started",
+                    title: "Hemen Başlayın",
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -68,7 +68,7 @@ class _WelcomeViewState extends State<WelcomeView> {
                     height: 15,
                   ),
                   SecondaryButton(
-                    title: "I have an account",
+                    title: "Hesabım Var ",
                     onPressed: () {
                       Navigator.push(
                         context,

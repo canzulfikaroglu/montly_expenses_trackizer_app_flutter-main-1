@@ -1,0 +1,3 @@
+class ExpensePrediction {
+  int? a;
+}
