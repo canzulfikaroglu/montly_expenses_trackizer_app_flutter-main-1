@@ -52,31 +52,31 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Yeni Hedef Ekle'),
+          title: const Text('Yeni Hedef Ekle'),
           content: SingleChildScrollView(
             child: Column(
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: InputDecoration(labelText: 'Hedef Adı'),
+                  decoration: const InputDecoration(labelText: 'Hedef Adı'),
                 ),
                 TextField(
                   controller: iconController,
-                  decoration: InputDecoration(labelText: 'İkon Yolu'),
+                  decoration: const InputDecoration(labelText: 'İkon Yolu'),
                 ),
                 TextField(
                   controller: savedBudgetController,
-                  decoration: InputDecoration(labelText: 'Biriktirilen Bütçe'),
+                  decoration: const InputDecoration(labelText: 'Biriktirilen Bütçe'),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: totalBudgetController,
-                  decoration: InputDecoration(labelText: 'Toplam Bütçe'),
+                  decoration: const InputDecoration(labelText: 'Toplam Bütçe'),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: leftAmountController,
-                  decoration: InputDecoration(labelText: 'Kalan Miktar'),
+                  decoration: const InputDecoration(labelText: 'Kalan Miktar'),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -84,13 +84,13 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
           ),
           actions: [
             TextButton(
-              child: Text('İptal'),
+              child: const Text('İptal'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Ekle'),
+              child: const Text('Ekle'),
               onPressed: () {
                 setState(() {
                   budgetArr.add({
@@ -165,7 +165,7 @@ class _SpendingBudgetsViewState extends State<SpendingBudgetsView> {
                 Column(
                   children: [
                     Text(
-                      "5000\₺", //aylık toplam harcamayı gösterecek
+                      "5000₺", //aylık toplam harcamayı gösterecek
                       style: TextStyle(
                           color: TColor.white,
                           fontSize: 24,

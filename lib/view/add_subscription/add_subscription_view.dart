@@ -199,7 +199,7 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                       backgroundColor:
                           isExpense ? TColor.primary : TColor.gray30,
                     ),
-                    child: Text('Harcamalar'),
+                    child: const Text('Harcamalar'),
                   ),
                   const SizedBox(width: 10),
                   ElevatedButton(
@@ -212,7 +212,7 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                       backgroundColor:
                           isExpense ? TColor.gray30 : TColor.primary,
                     ),
-                    child: Text('Gelirler'),
+                    child: const Text('Gelirler'),
                   ),
                 ],
               ),
@@ -232,7 +232,7 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                   ImageButton(
                     image: "assets/img/minus.png",
                     onPressed: () {
-                      amountVal -= 10;
+                      amountVal -= 50;
 
                       if (amountVal < 0) {
                         amountVal = 0;
@@ -273,7 +273,7 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                   ImageButton(
                     image: "assets/img/plus.png",
                     onPressed: () {
-                      amountVal += 10;
+                      amountVal += 100;
 
                       setState(() {});
                     },
@@ -312,20 +312,27 @@ class _AddSubScriptionViewState extends State<AddSubScriptionView> {
                   onPressed: () async {
                     description = txtDescription.text;
                     try {
+                      var newDate = DateTime.now();
+                      if (_selectedDate != null) {
+                        newDate = _selectedDate!;
+                      }
                       if (isExpense) {
                         FirebaseProcess().dataAdd(Expense(
                             name: name,
                             description: description,
                             price: amountVal,
                             icon: icon,
-                            date: _selectedDate ?? DateTime.now()));
+                            date:
+                                '${newDate.day}/${newDate.month}/${newDate.year}'));
                       } else {
                         FirebaseProcess().incomeAdd(Income(
-                            name: name,
-                            description: description,
-                            price: amountVal,
-                            icon: icon,
-                            date: _selectedDate ?? DateTime.now()));
+                          date:
+                              '${newDate.day}/${newDate.month}/${newDate.year}',
+                          name: name,
+                          description: description,
+                          price: amountVal,
+                          icon: icon,
+                        ));
                       }
 
                       ScaffoldMessenger.of(context).showSnackBar(

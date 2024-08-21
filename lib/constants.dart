@@ -5,7 +5,7 @@ class Expense {
   double price;
   String description;
   String icon;
-  DateTime date;
+  String date;
   Expense(
       {required this.name,
       required this.description,
@@ -19,7 +19,7 @@ class Expense {
       description: data['aciklama'] ?? '',
       price: data['fiyat']?.toDouble() ?? 0.0,
       icon: data['icon'] ?? '',
-      date: (data['tarih'] as Timestamp).toDate(),
+      date: data['tarih'],
     );
   }
 }
@@ -29,7 +29,7 @@ class Income {
   final String description;
   final double price;
   final String icon;
-  DateTime date;
+  final String date;
 
   Income({
     required this.name,
@@ -46,7 +46,7 @@ class Income {
       description: data['description'] ?? '',
       price: data['price']?.toDouble() ?? 0.0,
       icon: data['icon'] ?? '',
-      date: (data['date'] as Timestamp).toDate(),
+      date: data['date'],
     );
   }
 }

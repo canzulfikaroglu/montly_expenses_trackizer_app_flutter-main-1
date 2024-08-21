@@ -19,17 +19,17 @@ class _IncomeEntryViewState extends State<IncomeEntryView> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Yeni Gelir Ekle'),
+          title: const Text('Yeni Gelir Ekle'),
           content: SingleChildScrollView(
             child: Column(
               children: [
                 TextField(
                   controller: nameController,
-                  decoration: InputDecoration(labelText: 'Gelir Adı'),
+                  decoration: const InputDecoration(labelText: 'Gelir Adı'),
                 ),
                 TextField(
                   controller: priceController,
-                  decoration: InputDecoration(labelText: 'Gelir Tutarı'),
+                  decoration: const InputDecoration(labelText: 'Gelir Tutarı'),
                   keyboardType: TextInputType.number,
                 ),
               ],
@@ -37,13 +37,13 @@ class _IncomeEntryViewState extends State<IncomeEntryView> {
           ),
           actions: [
             TextButton(
-              child: Text('İptal'),
+              child: const Text('İptal'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Ekle'),
+              child: const Text('Ekle'),
               onPressed: () {
                 setState(() {
                   incomeArr.add({
@@ -71,7 +71,7 @@ class _IncomeEntryViewState extends State<IncomeEntryView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Gelir Girişi'),
+        title: const Text('Gelir Girişi'),
       ),
       backgroundColor: TColor.gray,
       body: SingleChildScrollView(

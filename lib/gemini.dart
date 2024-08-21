@@ -1,9 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:firebase_core/firebase_core.dart';
-import 'package:trackizer/common/color_extension.dart';
-import 'package:trackizer/firebase_options.dart';
 
 const baseUrl =
     "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyAmpkLH1e1nZdSPBMwnFF4UJvisON5RbWg";
@@ -16,7 +13,10 @@ Future<String?> getGeminiData(String input) async {
     "contents": [
       {
         "parts": [
-          {"text": "$input ."}
+          {
+            "text":
+                "bu bir bilgilendirmedir cevap verme Sadece ekonomiye ilişkin soruları cevapla onun dışındaki soruların cevabı ise Üzgünüm, bu yalnızca finansal durumlarını cevaplamak için oluşturulmuş bir uygulama  $input ."
+          }
         ]
       }
     ]
@@ -75,7 +75,7 @@ class _GeminiDataPageState extends State<GeminiDataPage> {
           children: [
             TextField(
               controller: _controller,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: "Sanal Asistanına Soru sor !",
                 border: OutlineInputBorder(),
               ),
