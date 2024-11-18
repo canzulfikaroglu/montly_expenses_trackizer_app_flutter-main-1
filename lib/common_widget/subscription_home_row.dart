@@ -45,9 +45,14 @@ class SubScriptionHomeRow extends StatelessWidget {
                       fontWeight: FontWeight.w600),
                 ),
               ),
-              const SizedBox(
-                width: 8,
-              ),
+              Expanded(
+                  child: Text(
+                sObj["date"],
+                style: TextStyle(
+                    color: TColor.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600),
+              )),
               Text(
                 "${sObj["price"]}TL",
                 style: TextStyle(

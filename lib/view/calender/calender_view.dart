@@ -19,23 +19,9 @@ class _CalenderViewState extends State<CalenderView> {
       CalendarAgendaController();
   late DateTime selectedDateNotAppBBar;
 
-  Random random = new Random();
+  Random random = Random();
 
-  List subArr = [
-    //bu listede o gün ki harcamalar gözükecek
-    {"name": "Spotify", "icon": "assets/img/spotify_logo.png", "price": "5.99"},
-    {
-      "name": "YouTube Premium",
-      "icon": "assets/img/youtube_logo.png",
-      "price": "18.99"
-    },
-    {
-      "name": "Microsoft OneDrive",
-      "icon": "assets/img/onedrive_logo.png",
-      "price": "29.99"
-    },
-    {"name": "NetFlix", "icon": "assets/img/netflix_logo.png", "price": "15.00"}
-  ];
+  List subArr = [];
 
   @override
   void initState() {
@@ -81,7 +67,7 @@ class _CalenderViewState extends State<CalenderView> {
                               ),
                               Row(
                                 children: [
-                                  Spacer(),
+                                  const Spacer(),
                                   IconButton(
                                       onPressed: () {
                                         Navigator.push(
@@ -116,8 +102,7 @@ class _CalenderViewState extends State<CalenderView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                //listenin lengt'i kadar olucak
-                                "3 subscription for today",
+                                "",
                                 style: TextStyle(
                                     color: TColor.gray30,
                                     fontSize: 14,
@@ -144,7 +129,7 @@ class _CalenderViewState extends State<CalenderView> {
                                     children: [
                                       Text(
                                         //ayı da static çekmek lazım
-                                        "${DateTime.now().month.toString()}",
+                                        DateTime.now().month.toString(),
                                         style: TextStyle(
                                             color: TColor.white,
                                             fontSize: 12,
@@ -229,8 +214,7 @@ class _CalenderViewState extends State<CalenderView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        //burda tıklanan tarih gelmesi lazım
-                        "January",
+                        "",
                         style: TextStyle(
                             color: TColor.white,
                             fontSize: 20,
@@ -238,7 +222,7 @@ class _CalenderViewState extends State<CalenderView> {
                       ),
                       Text(
                         //burda da toplam o tarihde ne kadar harcama yapıldığı gelmesi lazım
-                        "\$24.98",
+                        "",
                         style: TextStyle(
                             color: TColor.white,
                             fontSize: 20,
@@ -257,7 +241,7 @@ class _CalenderViewState extends State<CalenderView> {
                             fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        "in upcoming bills",
+                        "",
                         style: TextStyle(
                             color: TColor.gray30,
                             fontSize: 12,

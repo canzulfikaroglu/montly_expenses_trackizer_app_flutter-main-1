@@ -6,9 +6,7 @@ import '../../common_widget/custom_arc_painter.dart';
 import '../../common_widget/segment_button.dart';
 import '../../common_widget/status_button.dart';
 import '../../common_widget/subscription_home_row.dart';
-import '../../common_widget/upcoming_bill_row.dart';
 import '../settings/settings_view.dart';
-import '../subscription_info/subscription_info_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
@@ -89,7 +87,7 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(51, 130, 178, 255),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Column(
                 children: [
@@ -291,24 +289,9 @@ class _HomeViewState extends State<HomeView> {
                               'description': expense.description,
                               'price': expense.price,
                               'icon': expense.icon,
-                              'date': expense.date,
+                              'date': expense.date
                             },
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          SubscriptionInfoView(
-                                            sObj: {
-                                              'name': expense.name,
-                                              'description':
-                                                  expense.description,
-                                              'price': expense.price,
-                                              'icon': expense.icon,
-                                              'date': expense.date,
-                                            },
-                                          )));
-                            },
+                            onPressed: () {},
                           );
                         }),
                   if (!isSubscription)

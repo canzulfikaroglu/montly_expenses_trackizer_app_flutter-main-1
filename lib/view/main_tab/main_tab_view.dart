@@ -1,13 +1,13 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:trackizer/gemini.dart';
 import 'package:trackizer/view/add_subscription/add_subscription_view.dart';
+import 'package:trackizer/view/prediction/expense_prediction.dart';
 
 import '../../common/color_extension.dart';
 import '../calender/calender_view.dart';
-import '../prediction/expense_prediction.dart';
 import '../home/home_view.dart';
-import '../spending_budgets/spending_budgets_view.dart';
 
 class MainTabView extends StatefulWidget {
   const MainTabView({super.key});
@@ -17,6 +17,11 @@ class MainTabView extends StatefulWidget {
 }
 
 class _MainTabViewState extends State<MainTabView> {
+//  void _runPythonScript() async {
+  //  var result = await Process.run('python', ['regresyon.py']);
+  // print('Python script ran. Result: ${result.stdout}');
+  // }
+
   int selectTab = 0;
   PageStorageBucket pageStorageBucket = PageStorageBucket();
   Widget currentTabView = const HomeView();
@@ -91,7 +96,7 @@ class _MainTabViewState extends State<MainTabView> {
                               onPressed: () {
                                 setState(() {
                                   selectTab = 2;
-                                  currentTabView = CalenderView();
+                                  currentTabView = const CalenderView();
                                 });
                               },
                               icon: Image.asset(
@@ -105,9 +110,11 @@ class _MainTabViewState extends State<MainTabView> {
                             ),
                             IconButton(
                               onPressed: () {
-                                //  selectTab = 3;
-                                //  currentTabView = CardsView();
-                                //aaaaaaaaaaaaaa
+                                //        _runPythonScript();
+
+                                selectTab = 3;
+                                currentTabView = const ExpensePrediction();
+
                                 setState(() {});
                               },
                               icon: Image.asset(
